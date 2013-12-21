@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SpaceTimeModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="SpaceTimeEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Locations" EntityType="SpaceTimeModel.Location" />
+    <EntitySet Name="Radii" EntityType="SpaceTimeModel.Radius" />
+    <EntitySet Name="Tasks" EntityType="SpaceTimeModel.Task" />
+    <EntitySet Name="TaskLocations" EntityType="SpaceTimeModel.TaskLocation" />
+    <AssociationSet Name="FK_TaskLocation_Location" Association="SpaceTimeModel.FK_TaskLocation_Location">
+      <End Role="Location" EntitySet="Locations" />
+      <End Role="TaskLocation" EntitySet="TaskLocations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TaskLocation_Radius" Association="SpaceTimeModel.FK_TaskLocation_Radius">
+      <End Role="Radius" EntitySet="Radii" />
+      <End Role="TaskLocation" EntitySet="TaskLocations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TaskLocation_Task" Association="SpaceTimeModel.FK_TaskLocation_Task">
+      <End Role="Task" EntitySet="Tasks" />
+      <End Role="TaskLocation" EntitySet="TaskLocations" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="location_id" />
+    </Key>
+    <Property Type="Int32" Name="location_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="title" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="Double" Name="latitude" Nullable="false" />
+    <Property Type="Double" Name="longitude" Nullable="false" />
+    <NavigationProperty Name="TaskLocations" Relationship="SpaceTimeModel.FK_TaskLocation_Location" FromRole="Location" ToRole="TaskLocation" />
+  </EntityType>
+  <EntityType Name="Radius">
+    <Key>
+      <PropertyRef Name="radius_id" />
+    </Key>
+    <Property Type="Int32" Name="radius_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="description" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="radius_distance" Nullable="false" />
+    <Property Type="String" Name="unit" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TaskLocations" Relationship="SpaceTimeModel.FK_TaskLocation_Radius" FromRole="Radius" ToRole="TaskLocation" />
+  </EntityType>
+  <EntityType Name="Task">
+    <Key>
+      <PropertyRef Name="task_id" />
+    </Key>
+    <Property Type="Int32" Name="task_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="title" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="create_date" Nullable="false" Precision="3" />
+    <Property Type="Guid" Name="alternate_id" Nullable="false" />
+    <Property Type="Double" Name="latitude" Nullable="false" />
+    <Property Type="Double" Name="longitude" Nullable="false" />
+    <Property Type="DateTime" Name="due_date" Precision="3" />
+    <Property Type="DateTime" Name="update_date" Precision="3" />
+    <Property Type="Boolean" Name="active" Nullable="false" />
+    <NavigationProperty Name="TaskLocations" Relationship="SpaceTimeModel.FK_TaskLocation_Task" FromRole="Task" ToRole="TaskLocation" />
+  </EntityType>
+  <EntityType Name="TaskLocation">
+    <Key>
+      <PropertyRef Name="task_location_id" />
+    </Key>
+    <Property Type="Int32" Name="task_location_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="task_id" Nullable="false" />
+    <Property Type="Int32" Name="location_id" Nullable="false" />
+    <Property Type="Int32" Name="radius_id" Nullable="false" />
+    <NavigationProperty Name="Location" Relationship="SpaceTimeModel.FK_TaskLocation_Location" FromRole="TaskLocation" ToRole="Location" />
+    <NavigationProperty Name="Radius" Relationship="SpaceTimeModel.FK_TaskLocation_Radius" FromRole="TaskLocation" ToRole="Radius" />
+    <NavigationProperty Name="Task" Relationship="SpaceTimeModel.FK_TaskLocation_Task" FromRole="TaskLocation" ToRole="Task" />
+    <Property Type="Guid" Name="alternate_id" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_TaskLocation_Location">
+    <End Type="SpaceTimeModel.Location" Role="Location" Multiplicity="1" />
+    <End Type="SpaceTimeModel.TaskLocation" Role="TaskLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="location_id" />
+      </Principal>
+      <Dependent Role="TaskLocation">
+        <PropertyRef Name="location_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TaskLocation_Radius">
+    <End Type="SpaceTimeModel.Radius" Role="Radius" Multiplicity="1" />
+    <End Type="SpaceTimeModel.TaskLocation" Role="TaskLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Radius">
+        <PropertyRef Name="radius_id" />
+      </Principal>
+      <Dependent Role="TaskLocation">
+        <PropertyRef Name="radius_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TaskLocation_Task">
+    <End Type="SpaceTimeModel.Task" Role="Task" Multiplicity="1" />
+    <End Type="SpaceTimeModel.TaskLocation" Role="TaskLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Task">
+        <PropertyRef Name="task_id" />
+      </Principal>
+      <Dependent Role="TaskLocation">
+        <PropertyRef Name="task_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

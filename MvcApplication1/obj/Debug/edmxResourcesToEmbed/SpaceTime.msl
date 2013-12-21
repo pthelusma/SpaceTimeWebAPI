@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SpaceTimeModelStoreContainer" CdmEntityContainer="SpaceTimeEntities">
+    <EntitySetMapping Name="Locations">
+      <EntityTypeMapping TypeName="SpaceTimeModel.Location">
+        <MappingFragment StoreEntitySet="Location">
+          <ScalarProperty Name="longitude" ColumnName="longitude" />
+          <ScalarProperty Name="latitude" ColumnName="latitude" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="location_id" ColumnName="location_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Radii">
+      <EntityTypeMapping TypeName="SpaceTimeModel.Radius">
+        <MappingFragment StoreEntitySet="Radius">
+          <ScalarProperty Name="unit" ColumnName="unit" />
+          <ScalarProperty Name="radius_distance" ColumnName="radius_distance" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="radius_id" ColumnName="radius_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tasks">
+      <EntityTypeMapping TypeName="SpaceTimeModel.Task">
+        <MappingFragment StoreEntitySet="Task">
+          <ScalarProperty Name="active" ColumnName="active" />
+          <ScalarProperty Name="update_date" ColumnName="update_date" />
+          <ScalarProperty Name="due_date" ColumnName="due_date" />
+          <ScalarProperty Name="longitude" ColumnName="longitude" />
+          <ScalarProperty Name="latitude" ColumnName="latitude" />
+          <ScalarProperty Name="alternate_id" ColumnName="alternate_id" />
+          <ScalarProperty Name="create_date" ColumnName="create_date" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="task_id" ColumnName="task_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TaskLocations">
+      <EntityTypeMapping TypeName="SpaceTimeModel.TaskLocation">
+        <MappingFragment StoreEntitySet="TaskLocation">
+          <ScalarProperty Name="alternate_id" ColumnName="alternate_id" />
+          <ScalarProperty Name="radius_id" ColumnName="radius_id" />
+          <ScalarProperty Name="location_id" ColumnName="location_id" />
+          <ScalarProperty Name="task_id" ColumnName="task_id" />
+          <ScalarProperty Name="task_location_id" ColumnName="task_location_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

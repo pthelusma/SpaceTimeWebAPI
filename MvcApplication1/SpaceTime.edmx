@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SpaceTimeModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="SpaceTimeModelStoreContainer">
+          <EntitySet Name="Location" EntityType="SpaceTimeModel.Store.Location" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Radius" EntityType="SpaceTimeModel.Store.Radius" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Task" EntityType="SpaceTimeModel.Store.Task" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TaskLocation" EntityType="SpaceTimeModel.Store.TaskLocation" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_TaskLocation_Location" Association="SpaceTimeModel.Store.FK_TaskLocation_Location">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="TaskLocation" EntitySet="TaskLocation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskLocation_Radius" Association="SpaceTimeModel.Store.FK_TaskLocation_Radius">
+            <End Role="Radius" EntitySet="Radius" />
+            <End Role="TaskLocation" EntitySet="TaskLocation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskLocation_Task" Association="SpaceTimeModel.Store.FK_TaskLocation_Task">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="TaskLocation" EntitySet="TaskLocation" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="location_id" />
+          </Key>
+          <Property Name="location_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="latitude" Type="float" Nullable="false" />
+          <Property Name="longitude" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Radius">
+          <Key>
+            <PropertyRef Name="radius_id" />
+          </Key>
+          <Property Name="radius_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="radius_distance" Type="int" Nullable="false" />
+          <Property Name="unit" Type="varchar" Nullable="false" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="task_id" />
+          </Key>
+          <Property Name="task_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="alternate_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="latitude" Type="float" Nullable="false" />
+          <Property Name="longitude" Type="float" Nullable="false" />
+          <Property Name="due_date" Type="datetime" />
+          <Property Name="update_date" Type="datetime" />
+          <Property Name="active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TaskLocation">
+          <Key>
+            <PropertyRef Name="task_location_id" />
+          </Key>
+          <Property Name="task_location_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="task_id" Type="int" Nullable="false" />
+          <Property Name="location_id" Type="int" Nullable="false" />
+          <Property Name="radius_id" Type="int" Nullable="false" />
+          <Property Name="alternate_id" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_TaskLocation_Location">
+          <End Role="Location" Type="SpaceTimeModel.Store.Location" Multiplicity="1" />
+          <End Role="TaskLocation" Type="SpaceTimeModel.Store.TaskLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="location_id" />
+            </Principal>
+            <Dependent Role="TaskLocation">
+              <PropertyRef Name="location_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaskLocation_Radius">
+          <End Role="Radius" Type="SpaceTimeModel.Store.Radius" Multiplicity="1" />
+          <End Role="TaskLocation" Type="SpaceTimeModel.Store.TaskLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Radius">
+              <PropertyRef Name="radius_id" />
+            </Principal>
+            <Dependent Role="TaskLocation">
+              <PropertyRef Name="radius_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaskLocation_Task">
+          <End Role="Task" Type="SpaceTimeModel.Store.Task" Multiplicity="1" />
+          <End Role="TaskLocation" Type="SpaceTimeModel.Store.TaskLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="task_id" />
+            </Principal>
+            <Dependent Role="TaskLocation">
+              <PropertyRef Name="task_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SpaceTimeModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SpaceTimeEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Locations" EntityType="SpaceTimeModel.Location" />
+          <EntitySet Name="Radii" EntityType="SpaceTimeModel.Radius" />
+          <EntitySet Name="Tasks" EntityType="SpaceTimeModel.Task" />
+          <EntitySet Name="TaskLocations" EntityType="SpaceTimeModel.TaskLocation" />
+          <AssociationSet Name="FK_TaskLocation_Location" Association="SpaceTimeModel.FK_TaskLocation_Location">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="TaskLocation" EntitySet="TaskLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskLocation_Radius" Association="SpaceTimeModel.FK_TaskLocation_Radius">
+            <End Role="Radius" EntitySet="Radii" />
+            <End Role="TaskLocation" EntitySet="TaskLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskLocation_Task" Association="SpaceTimeModel.FK_TaskLocation_Task">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="TaskLocation" EntitySet="TaskLocations" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="location_id" />
+          </Key>
+          <Property Type="Int32" Name="location_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="title" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="Double" Name="latitude" Nullable="false" />
+          <Property Type="Double" Name="longitude" Nullable="false" />
+          <NavigationProperty Name="TaskLocations" Relationship="SpaceTimeModel.FK_TaskLocation_Location" FromRole="Location" ToRole="TaskLocation" />
+        </EntityType>
+        <EntityType Name="Radius">
+          <Key>
+            <PropertyRef Name="radius_id" />
+          </Key>
+          <Property Type="Int32" Name="radius_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="radius_distance" Nullable="false" />
+          <Property Type="String" Name="unit" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TaskLocations" Relationship="SpaceTimeModel.FK_TaskLocation_Radius" FromRole="Radius" ToRole="TaskLocation" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="task_id" />
+          </Key>
+          <Property Type="Int32" Name="task_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="title" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="create_date" Nullable="false" Precision="3" />
+          <Property Type="Guid" Name="alternate_id" Nullable="false" />
+          <Property Type="Double" Name="latitude" Nullable="false" />
+          <Property Type="Double" Name="longitude" Nullable="false" />
+          <Property Type="DateTime" Name="due_date" Precision="3" />
+          <Property Type="DateTime" Name="update_date" Precision="3" />
+          <Property Type="Boolean" Name="active" Nullable="false" />
+          <NavigationProperty Name="TaskLocations" Relationship="SpaceTimeModel.FK_TaskLocation_Task" FromRole="Task" ToRole="TaskLocation" />
+        </EntityType>
+        <EntityType Name="TaskLocation">
+          <Key>
+            <PropertyRef Name="task_location_id" />
+          </Key>
+          <Property Type="Int32" Name="task_location_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="task_id" Nullable="false" />
+          <Property Type="Int32" Name="location_id" Nullable="false" />
+          <Property Type="Int32" Name="radius_id" Nullable="false" />
+          <NavigationProperty Name="Location" Relationship="SpaceTimeModel.FK_TaskLocation_Location" FromRole="TaskLocation" ToRole="Location" />
+          <NavigationProperty Name="Radius" Relationship="SpaceTimeModel.FK_TaskLocation_Radius" FromRole="TaskLocation" ToRole="Radius" />
+          <NavigationProperty Name="Task" Relationship="SpaceTimeModel.FK_TaskLocation_Task" FromRole="TaskLocation" ToRole="Task" />
+          <Property Type="Guid" Name="alternate_id" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_TaskLocation_Location">
+          <End Type="SpaceTimeModel.Location" Role="Location" Multiplicity="1" />
+          <End Type="SpaceTimeModel.TaskLocation" Role="TaskLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="location_id" />
+            </Principal>
+            <Dependent Role="TaskLocation">
+              <PropertyRef Name="location_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaskLocation_Radius">
+          <End Type="SpaceTimeModel.Radius" Role="Radius" Multiplicity="1" />
+          <End Type="SpaceTimeModel.TaskLocation" Role="TaskLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Radius">
+              <PropertyRef Name="radius_id" />
+            </Principal>
+            <Dependent Role="TaskLocation">
+              <PropertyRef Name="radius_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaskLocation_Task">
+          <End Type="SpaceTimeModel.Task" Role="Task" Multiplicity="1" />
+          <End Type="SpaceTimeModel.TaskLocation" Role="TaskLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="task_id" />
+            </Principal>
+            <Dependent Role="TaskLocation">
+              <PropertyRef Name="task_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SpaceTimeModelStoreContainer" CdmEntityContainer="SpaceTimeEntities">
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="SpaceTimeModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="location_id" ColumnName="location_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Radii">
+            <EntityTypeMapping TypeName="SpaceTimeModel.Radius">
+              <MappingFragment StoreEntitySet="Radius">
+                <ScalarProperty Name="unit" ColumnName="unit" />
+                <ScalarProperty Name="radius_distance" ColumnName="radius_distance" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="radius_id" ColumnName="radius_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="SpaceTimeModel.Task">
+              <MappingFragment StoreEntitySet="Task">
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="due_date" ColumnName="due_date" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="alternate_id" ColumnName="alternate_id" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="task_id" ColumnName="task_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaskLocations">
+            <EntityTypeMapping TypeName="SpaceTimeModel.TaskLocation">
+              <MappingFragment StoreEntitySet="TaskLocation">
+                <ScalarProperty Name="alternate_id" ColumnName="alternate_id" />
+                <ScalarProperty Name="radius_id" ColumnName="radius_id" />
+                <ScalarProperty Name="location_id" ColumnName="location_id" />
+                <ScalarProperty Name="task_id" ColumnName="task_id" />
+                <ScalarProperty Name="task_location_id" ColumnName="task_location_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

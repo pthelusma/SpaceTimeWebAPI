@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5659ff8e573f41fe8249120809b2e886" Name="Diagram1">
+        <EntityTypeShape EntityType="SpaceTimeModel.Location" Width="1.5" PointX="7.7367993685122567" PointY="29.686485870595316" />
+        <EntityTypeShape EntityType="SpaceTimeModel.Radius" Width="1.5" PointX="7.69874273971596" PointY="9.8374421195301416" />
+        <EntityTypeShape EntityType="SpaceTimeModel.Task" Width="1.5" PointX="6.9635397377254167" PointY="15.203553638981447" />
+        <EntityTypeShape EntityType="SpaceTimeModel.TaskLocation" Width="1.5" PointX="10.685577101393406" PointY="13.224216646153581" />
+        <AssociationConnector Association="SpaceTimeModel.FK_TaskLocation_Location" />
+        <AssociationConnector Association="SpaceTimeModel.FK_TaskLocation_Radius" />
+        <AssociationConnector Association="SpaceTimeModel.FK_TaskLocation_Task" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
